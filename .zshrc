@@ -1,142 +1,85 @@
-# LANG
-export LANG=ja_JP.UTF-8
-export LC_ALL=ja_JP.UTF-8
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# emacs like keybind
-bindkey -e
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/TA/.oh-my-zsh
 
-autoload -U compinit
-compinit
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 
-# Ruby Gems
-export BUNDLER_EDITOR=emacs
-# export PATH="$(brew --prefix homebrew/php/php70)/bin:$PATH"
- #auto-change capital letter to small letter
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-# auto-complete
-setopt auto_cd
-cdpath=(.. ~ ~/src)
-setopt auto_pushd
-setopt correct
-setopt list_packed
-setopt nolistbeep
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-setopt HIST_IGNORE_ALL_DUPS
-setopt EXTENDED_HISTORY
-setopt NO_HUP
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-setopt no_nomatch
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-#autoload predict-on
-#predict-on
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# PROMPT
-PROMPT="$ "
-RPROMPT="%~"
-SPROMPT="correct: %R -> %r ? "
-PROMPT2="$ "
-SPROMPT="zsh: %r is correct? [n,y,a,e]: "
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# Terminal Title
-#precmd() {
-#    echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-#}
-#;;
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# History Size
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-#setopt hist_ignore_dups     # ignore duplication command history list
-#setopt share_history        # share command history data
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
 
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# git current dir
-# http://d.hatena.ne.jp/uasi/20091017/1255712789
-autoload -U colors; colors
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
 
-function rprompt-git-current-branch {
-        local name st color
+source $ZSH/oh-my-zsh.sh
 
-        if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-                return
-        fi
-        name=$(basename "`git symbolic-ref HEAD 2> /dev/null`")
-        if [[ -z $name ]]; then
-                return
-        fi
-        st=`git status 2> /dev/null`
-        if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-                color=${fg[green]}
-        elif [[ -n `echo "$st" | grep "^nothing added"` ]]; then
-                color=${fg[yellow]}
-        elif [[ -n `echo "$st" | grep "^# Untracked"` ]]; then
-                color=${fg_bold[red]}
-        else
-                color=${fg[red]}
-        fi
+# User configuration
 
-        echo "%{$color%}$name%{$reset_color%} "
-}
-setopt prompt_subst
+# export MANPATH="/usr/local/man:$MANPATH"
 
-RPROMPT='[`rprompt-git-current-branch`%~]'
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
 
-# Alias
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-# alias octave='/Applications/Octave.app/Contents/Resources/bin/octave'
-# alias gnuplot='/Applications/Gnuplot.app/Contents/Resources/bin/gnuplot'
-# alias gitx='/Applications/GitX.app/Contents/Resources/gitx'
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
-export CLICOLOR=1
-export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
-# export LSCOLORS=Cxgxcxdxbxegedabagacad
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# STARTFGCOLOR='\e[0;34m';
-# STARTBGCOLOR="\e[47m"
-# ENDCOLOR="\e[0m"
-# export PS1="$STARTFGCOLOR$STARTBGCOLOR\u@\h \w> $ENDCOLOR"
-PROMPT="%F{red}%K{white}$%k%f "
-alias o="open ."
-alias l="ls"
-alias gist="git status"
-alias gisp="git stash pop stash@{0}"
-alias giff="git diff"
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-alias ls='ls -G -w'
-##alias ls='ls --color'
-alias gls="gls --color"
-alias la="ls -la"
-alias lg="ls -g"
-alias ll="ls -l"
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-alias be="bundle exec"
-
-if [[ -x `which colordiff` ]]; then
-  alias diff='colordiff -u'
-else
-  alias diff='diff -u'
-fi
-atom=/Applications/Atom.app/Contents/MacOS/Atom
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=$PATH:$HOME
-eval "$(pyenv init -)"
-
-# aliases
-alias c="cd"
-alias l="/bin/ls -G"
-alias ls="ls -F -l -t -G"
-alias ll="ls -al -G"
-
-alias gist="git status"
-alias giff="git diff"
-alias gisp="git stash pop stash@{0}"
-
-alias o="open ."
-alias ocaml="rlwrap ocaml"
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
